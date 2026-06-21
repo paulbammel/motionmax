@@ -1,8 +1,8 @@
-// ==================== MOTIONMAX v8 - FORCE NEW VERSION ====================
-console.log("✅ v8 CLEAN BUILD - No Supabase Duplicates");
+// v9 - MINIMAL TEST
+console.log("✅ v9 MINIMAL TEST LOADED");
 
 function showSignUpForm() {
-    console.log("✅ Create one clicked - v8");
+    console.log("✅ Create one clicked - v9");
     document.getElementById('login-form').classList.add('hidden');
     document.getElementById('signup-form').classList.remove('hidden');
 }
@@ -13,14 +13,11 @@ function showLoginForm() {
 }
 
 function signUp() {
-    alert("✅ Sign Up button is working (v8)");
-    showLoginForm();
+    alert("Sign Up button works - v9");
 }
 
 function signIn() {
-    alert("✅ Sign In successful (v8) - Loading editor...");
-    document.getElementById('auth-modal').classList.add('hidden');
-    document.getElementById('main-app').classList.remove('hidden');
+    alert("Sign In works - v9");
 }
 
-window.onload = () => console.log("✅ v8 Page loaded");
+window.onload = () => console.log("✅ v9 Page ready");
