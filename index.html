@@ -14,7 +14,7 @@
     <div id="auth-modal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
         <div class="bg-zinc-900 rounded-3xl p-8 w-full max-w-md">
             <h2 class="text-3xl font-bold text-center mb-2">MotionMax</h2>
-            <p class="text-center text-zinc-400 mb-8">Sign in to start designing</p>
+            <p class="text-center text-zinc-400 mb-8">Sign in to start creating</p>
 
             <div id="login-form">
                 <input type="email" id="login-email" placeholder="Email" class="w-full p-4 bg-zinc-800 rounded-2xl mb-3">
@@ -36,24 +36,8 @@
 
     <!-- Main Editor -->
     <div id="main-app" class="hidden flex flex-col h-screen">
-        <!-- Navbar -->
         <nav class="bg-zinc-900 border-b border-zinc-800 px-6 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold">MotionMax</h1>
             <div class="flex items-center gap-4">
                 <span id="user-email" class="text-sm text-zinc-400"></span>
-                <button onclick="signOut()" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-xl">Sign Out</button>
-            </div>
-        </nav>
-
-        <!-- Full Editor goes here - paste your previous full editor code if you want, or let me know and I'll send the complete version with canvas + timeline -->
-        <div class="flex-1 flex items-center justify-center bg-zinc-950">
-            <div class="text-center">
-                <h2 class="text-4xl font-bold mb-4">✅ You're logged in!</h2>
-                <p class="text-zinc-400">The full motion editor will be loaded here.</p>
-            </div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
+                <button onclick="signOut()" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700
