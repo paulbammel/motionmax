@@ -1,5 +1,5 @@
-// ==================== MOTIONMAX FULL EDITOR ====================
-console.log("✅ MotionMax Full Editor Loaded");
+// ==================== MOTIONMAX FULL APP ====================
+console.log("✅ MotionMax Full App Loaded");
 
 const SUPABASE_URL = 'https://dyeiilqcufdebboycukh.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_Crh5yHaEd6czFyoPv_-4-Q_FR5J2v4B';
@@ -54,27 +54,16 @@ async function signIn() {
     document.getElementById('user-email').textContent = data.user.email;
 }
 
+// ==================== EDITOR (Basic for now) ====================
+function initEditor() {
+    console.log("✅ Full Motion Editor Ready");
+    // Canvas, timeline, etc. will go here
+}
+
 async function signOut() {
     await supabase.auth.signOut();
     location.reload();
 }
 
-// ==================== EDITOR CORE ====================
-let layers = [], selectedId = null, currentTime = 0, duration = 10000;
-const canvas = document.getElementById('canvas');
-const ctx = canvas.getContext('2d');
-
-function initEditor() {
-    console.log("✅ Full Editor Initialized");
-    // Add your canvas setup, draw function, etc. here later
-}
-
 window.onload = async () => {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (session && session.user.email === "motionmaxonline@gmail.com") {
-        document.getElementById('auth-modal').classList.add('hidden');
-        document.getElementById('main-app').classList.remove('hidden');
-        document.getElementById('user-email').textContent = session.user.email;
-        initEditor();
-    }
-};
+    const { data: { session } } = await supabase.auth.get
