@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MotionMax Online</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="bg-zinc-950 text-zinc-200">
+
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
+        <div class="bg-zinc-900 rounded-3xl p-8 w-full max-w-md mx-4">
+            <h2 class="text-3xl font-bold text-center mb-2">MotionMax Online</h2>
+            <p class="text-center text-zinc-400 mb-8">Sign in to continue</p>
+
+            <div id="login-form">
+                <input type="email" id="login-email" placeholder="Email" class="w-full p-4 bg-zinc-800 rounded-2xl mb-3">
+                <input type="password" id="login-password" placeholder="Password" class="w-full p-4 bg-zinc-800 rounded-2xl mb-6">
+                <button onclick="signIn()" class="w-full p-4 bg-blue-600 hover:bg-blue-700 rounded-2xl font-medium">Sign In</button>
+                <p class="text-center mt-6 text-sm">
+                    Don't have an account? 
+                    <span onclick="showSignUpForm()" class="text-blue-400 cursor-pointer hover:underline">Create one</span>
+                </p>
+            </div>
+
+            <div id="signup-form" class="hidden">
+                <input type="email" id="signup-email" placeholder="Email" class="w-full p-4 bg-zinc-800 rounded-2xl mb-3">
+                <input type="password" id="signup-password" placeholder="Password" class="w-full p-4 bg-zinc-800 rounded-2xl mb-6">
+                <button onclick="signUp()" class="w-full p-4 bg-blue-600 hover:bg-blue-700 rounded-2xl font-medium">Create Account</button>
+                <p class="text-center mt-6 text-sm">
+                    Already have an account? 
+                    <span onclick="showLoginForm()" class="text-blue-400 cursor-pointer hover:underline">Sign in</span>
+                </p>
+            </div>
+
+            <p id="auth-error" class="text-red-400 text-center mt-4 hidden"></p>
+        </div>
+    </div>
+
+    <!-- Main App (shown after login) -->
+    <div id="main-app" class="hidden h-screen flex items-center justify-center bg-zinc-950">
+        <div class="text-center">
+            <h1 class="text-4xl font-bold mb-4">✅ Logged In Successfully</h1>
+            <p class="text-zinc-400 mb-8">Welcome to MotionMax Online</p>
+            <button onclick="signOut()" class="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-2xl">Sign Out</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
