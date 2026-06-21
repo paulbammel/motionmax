@@ -2,14 +2,58 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MotionMax</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-zinc-950 text-white p-8">
-    <h1 class="text-3xl mb-8">MotionMax Test</h1>
+<body class="bg-zinc-950 text-zinc-200">
 
-    <div id="auth-modal">
-        <button onclick="showSignUpForm()" class="bg-blue-600 px-6 py-3 rounded-xl">Create one</button>
+    <!-- Auth Modal -->
+    <div id="auth-modal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
+        <div class="bg-zinc-900 rounded-3xl p-8 w-full max-w-md">
+            <h2 class="text-3xl font-bold text-center mb-6">MotionMax</h2>
+            
+            <div id="login-form">
+                <input type="email" id="login-email" placeholder="Email" class="w-full p-4 bg-zinc-800 rounded-2xl mb-3">
+                <input type="password" id="login-password" placeholder="Password" class="w-full p-4 bg-zinc-800 rounded-2xl mb-6">
+                <button onclick="signIn()" class="w-full p-4 bg-blue-600 rounded-2xl font-medium">Sign In</button>
+                <p class="text-center mt-6">No account? <span onclick="showSignUpForm()" class="text-blue-400 cursor-pointer">Create one</span></p>
+            </div>
+
+            <div id="signup-form" class="hidden">
+                <input type="email" id="signup-email" placeholder="Email" class="w-full p-4 bg-zinc-800 rounded-2xl mb-3">
+                <input type="password" id="signup-password" placeholder="Password" class="w-full p-4 bg-zinc-800 rounded-2xl mb-6">
+                <button onclick="signUp()" class="w-full p-4 bg-blue-600 rounded-2xl font-medium">Create Account</button>
+                <p class="text-center mt-6">Have an account? <span onclick="showLoginForm()" class="text-blue-400 cursor-pointer">Sign in</span></p>
+            </div>
+
+            <p id="auth-error" class="text-red-400 text-center mt-4 hidden"></p>
+        </div>
+    </div>
+
+    <!-- Main Editor -->
+    <div id="main-app" class="hidden flex flex-col h-screen">
+        <nav class="bg-zinc-900 border-b border-zinc-800 px-6 py-4 flex justify-between">
+            <h1 class="text-2xl font-bold">MotionMax</h1>
+            <button onclick="signOut()" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-xl">Sign Out</button>
+        </nav>
+
+        <div class="flex flex-1 overflow-hidden">
+            <!-- Tools -->
+            <div class="w-64 bg-zinc-900 border-r border-zinc-800 p-4">
+                <h3 class="font-semibold mb-4">Tools</h3>
+                <button onclick="addLayer('text')" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl mb-2">T Add Text</button>
+                <button onclick="addLayer('rect')" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl mb-2">□ Rectangle</button>
+                <button onclick="addLayer('circle')" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl">○ Circle</button>
+            </div>
+
+            <!-- Canvas -->
+            <div class="flex-1 flex items-center justify-center bg-zinc-950">
+                <canvas id="canvas" width="900" height="600" class="border border-zinc-700 bg-white shadow-2xl rounded-xl"></canvas>
+            </div>
+        </div>
     </div>
 
     <script src="script.js"></script>
