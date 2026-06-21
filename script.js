@@ -1,8 +1,12 @@
-// ==================== MOTIONMAX - CLEAN BUILD FOR GITHUB PAGES ====================
-console.log("✅ CLEAN BUILD v6 - GitHub Pages");
+console.log("✅ MotionMax - Full Version Loaded");
+
+// ==================== SUPABASE ====================
+const SUPABASE_URL = 'https://dyeiilqcufdebboycukh.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_Crh5yHaEd6czFyoPv_-4-Q_FR5J2v4B';
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 function showSignUpForm() {
-    console.log("✅ Create one clicked");
     document.getElementById('login-form').classList.add('hidden');
     document.getElementById('signup-form').classList.remove('hidden');
 }
@@ -24,14 +28,42 @@ async function signUp() {
 
     if (!email || !password) return showAuthError("Email and password required");
 
-    alert("✅ Sign Up button works!\n\n(Supabase test successful)");
-    showLoginForm();
+    const { error } = await supabase.auth.signUp({ email, password });
+    if (error) showAuthError(error.message);
+    else {
+        alert("✅ Account created!\n\nCheck motionmaxonline@gmail.com for the confirmation email.");
+        showLoginForm();
+    }
 }
 
 async function signIn() {
-    alert("✅ Sign In button works!");
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+
+    if (error) return showAuthError(error.message);
+
+    if (data.user.email !== "motionmaxonline@gmail.com") {
+        await supabase.auth.signOut();
+        return showAuthError("Access restricted for now.");
+    }
+
+    document.getElementById('auth-modal').classList.add('hidden');
+    document.getElementById('main-app').classList.remove('hidden');
+    document.getElementById('user-email').textContent = data.user.email;
 }
 
-window.onload = () => {
-    console.log("✅ Page fully loaded");
+async function signOut() {
+    await supabase.auth.signOut();
+    location.reload();
+}
+
+window.onload = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session && session.user.email === "motionmaxonline@gmail.com") {
+        document.getElementById('auth-modal').classList.add('hidden');
+        document.getElementById('main-app').classList.remove('hidden');
+        document.getElementById('user-email').textContent = session.user.email;
+    }
 };
