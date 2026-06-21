@@ -1,4 +1,4 @@
-console.log("✅ MotionMax - Full Version Loaded");
+console.log("✅ MotionMax - Fixed Transition Version");
 
 // ==================== SUPABASE ====================
 const SUPABASE_URL = 'https://dyeiilqcufdebboycukh.supabase.co';
@@ -31,7 +31,7 @@ async function signUp() {
     const { error } = await supabase.auth.signUp({ email, password });
     if (error) showAuthError(error.message);
     else {
-        alert("✅ Account created!\n\nCheck motionmaxonline@gmail.com for the confirmation email.");
+        alert("✅ Account created!\n\nCheck your email (motionmaxonline@gmail.com) for confirmation link.");
         showLoginForm();
     }
 }
@@ -40,15 +40,20 @@ async function signIn() {
     const email = document.getElementById('login-email').value.trim();
     const password = document.getElementById('login-password').value;
 
+    if (!email || !password) return showAuthError("Email and password required");
+
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
 
     if (error) return showAuthError(error.message);
 
+    // Admin check
     if (data.user.email !== "motionmaxonline@gmail.com") {
         await supabase.auth.signOut();
         return showAuthError("Access restricted for now.");
     }
 
+    // SUCCESS - Transition to main app
+    console.log("✅ Login successful - transitioning to editor");
     document.getElementById('auth-modal').classList.add('hidden');
     document.getElementById('main-app').classList.remove('hidden');
     document.getElementById('user-email').textContent = data.user.email;
@@ -59,6 +64,7 @@ async function signOut() {
     location.reload();
 }
 
+// Auto-login if already signed in
 window.onload = async () => {
     const { data: { session } } = await supabase.auth.getSession();
     if (session && session.user.email === "motionmaxonline@gmail.com") {
