@@ -2,42 +2,16 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MotionMax • Online Motion Design</title>
+    <title>MotionMax</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-zinc-950 text-zinc-200">
+<body class="bg-zinc-950 text-white p-8">
+    <h1 class="text-3xl mb-8">MotionMax Test</h1>
 
-    <!-- Auth Modal -->
-    <div id="auth-modal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
-        <div class="bg-zinc-900 rounded-3xl p-8 w-full max-w-md">
-            <h2 class="text-3xl font-bold text-center mb-2">MotionMax</h2>
-            <p class="text-center text-zinc-400 mb-8">Sign in to start creating</p>
-
-            <div id="login-form">
-                <input type="email" id="login-email" placeholder="Email" class="w-full p-4 bg-zinc-800 rounded-2xl mb-3">
-                <input type="password" id="login-password" placeholder="Password" class="w-full p-4 bg-zinc-800 rounded-2xl mb-6">
-                <button onclick="signIn()" class="w-full p-4 bg-blue-600 rounded-2xl font-medium">Sign In</button>
-                <p class="text-center mt-6 text-sm">Don't have an account? <span onclick="showSignUpForm()" class="text-blue-400 cursor-pointer">Create one</span></p>
-            </div>
-
-            <div id="signup-form" class="hidden">
-                <input type="email" id="signup-email" placeholder="Email" class="w-full p-4 bg-zinc-800 rounded-2xl mb-3">
-                <input type="password" id="signup-password" placeholder="Password" class="w-full p-4 bg-zinc-800 rounded-2xl mb-6">
-                <button onclick="signUp()" class="w-full p-4 bg-blue-600 rounded-2xl font-medium">Create Account</button>
-                <p class="text-center mt-6 text-sm">Have an account? <span onclick="showLoginForm()" class="text-blue-400 cursor-pointer">Sign in</span></p>
-            </div>
-
-            <p id="auth-error" class="text-red-400 text-center mt-4 hidden"></p>
-        </div>
+    <div id="auth-modal">
+        <button onclick="showSignUpForm()" class="bg-blue-600 px-6 py-3 rounded-xl">Create one</button>
     </div>
 
-    <!-- Main Editor -->
-    <div id="main-app" class="hidden flex flex-col h-screen">
-        <nav class="bg-zinc-900 border-b border-zinc-800 px-6 py-4 flex justify-between items-center">
-            <h1 class="text-2xl font-bold">MotionMax</h1>
-            <div class="flex items-center gap-4">
-                <span id="user-email" class="text-sm text-zinc-400"></span>
-                <button onclick="signOut()" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700
+    <script src="script.js"></script>
+</body>
+</html>
