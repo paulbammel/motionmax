@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MotionMax Online</title>
+    <title>MotionMax • Online Motion Design</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="styles.css">
@@ -12,40 +12,45 @@
 
     <!-- Auth Modal -->
     <div id="auth-modal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
-        <div class="bg-zinc-900 rounded-3xl p-8 w-full max-w-md mx-4">
-            <h2 class="text-3xl font-bold text-center mb-2">MotionMax Online</h2>
-            <p class="text-center text-zinc-400 mb-8">Sign in to continue</p>
+        <div class="bg-zinc-900 rounded-3xl p-8 w-full max-w-md">
+            <h2 class="text-3xl font-bold text-center mb-2">MotionMax</h2>
+            <p class="text-center text-zinc-400 mb-8">Sign in to start designing</p>
 
             <div id="login-form">
                 <input type="email" id="login-email" placeholder="Email" class="w-full p-4 bg-zinc-800 rounded-2xl mb-3">
                 <input type="password" id="login-password" placeholder="Password" class="w-full p-4 bg-zinc-800 rounded-2xl mb-6">
-                <button onclick="signIn()" class="w-full p-4 bg-blue-600 hover:bg-blue-700 rounded-2xl font-medium">Sign In</button>
-                <p class="text-center mt-6 text-sm">
-                    Don't have an account? 
-                    <span onclick="showSignUpForm()" class="text-blue-400 cursor-pointer hover:underline">Create one</span>
-                </p>
+                <button onclick="signIn()" class="w-full p-4 bg-blue-600 rounded-2xl font-medium">Sign In</button>
+                <p class="text-center mt-6 text-sm">Don't have an account? <span onclick="showSignUpForm()" class="text-blue-400 cursor-pointer">Create one</span></p>
             </div>
 
             <div id="signup-form" class="hidden">
                 <input type="email" id="signup-email" placeholder="Email" class="w-full p-4 bg-zinc-800 rounded-2xl mb-3">
                 <input type="password" id="signup-password" placeholder="Password" class="w-full p-4 bg-zinc-800 rounded-2xl mb-6">
-                <button onclick="signUp()" class="w-full p-4 bg-blue-600 hover:bg-blue-700 rounded-2xl font-medium">Create Account</button>
-                <p class="text-center mt-6 text-sm">
-                    Already have an account? 
-                    <span onclick="showLoginForm()" class="text-blue-400 cursor-pointer hover:underline">Sign in</span>
-                </p>
+                <button onclick="signUp()" class="w-full p-4 bg-blue-600 rounded-2xl font-medium">Create Account</button>
+                <p class="text-center mt-6 text-sm">Have an account? <span onclick="showLoginForm()" class="text-blue-400 cursor-pointer">Sign in</span></p>
             </div>
 
             <p id="auth-error" class="text-red-400 text-center mt-4 hidden"></p>
         </div>
     </div>
 
-    <!-- Main App (shown after login) -->
-    <div id="main-app" class="hidden h-screen flex items-center justify-center bg-zinc-950">
-        <div class="text-center">
-            <h1 class="text-4xl font-bold mb-4">✅ Logged In Successfully</h1>
-            <p class="text-zinc-400 mb-8">Welcome to MotionMax Online</p>
-            <button onclick="signOut()" class="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-2xl">Sign Out</button>
+    <!-- Main Editor -->
+    <div id="main-app" class="hidden flex flex-col h-screen">
+        <!-- Navbar -->
+        <nav class="bg-zinc-900 border-b border-zinc-800 px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold">MotionMax</h1>
+            <div class="flex items-center gap-4">
+                <span id="user-email" class="text-sm text-zinc-400"></span>
+                <button onclick="signOut()" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-xl">Sign Out</button>
+            </div>
+        </nav>
+
+        <!-- Full Editor goes here - paste your previous full editor code if you want, or let me know and I'll send the complete version with canvas + timeline -->
+        <div class="flex-1 flex items-center justify-center bg-zinc-950">
+            <div class="text-center">
+                <h2 class="text-4xl font-bold mb-4">✅ You're logged in!</h2>
+                <p class="text-zinc-400">The full motion editor will be loaded here.</p>
+            </div>
         </div>
     </div>
 
