@@ -1,8 +1,13 @@
-// ==================== MOTIONMAX - WORKING VERSION (NO DUPLICATES) ====================
-console.log("✅ FINAL CLEAN VERSION - NO SUPABASE DUPLICATES");
+// ==================== MOTIONMAX FULL EDITOR ====================
+console.log("✅ MotionMax Full Editor Loaded");
 
+const SUPABASE_URL = 'https://dyeiilqcufdebboycukh.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_Crh5yHaEd6czFyoPv_-4-Q_FR5J2v4B';
+
+const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// ==================== AUTH ====================
 function showSignUpForm() {
-    console.log("✅ Create one clicked");
     document.getElementById('login-form').classList.add('hidden');
     document.getElementById('signup-form').classList.remove('hidden');
 }
@@ -12,17 +17,64 @@ function showLoginForm() {
     document.getElementById('login-form').classList.remove('hidden');
 }
 
-function signUp() {
-    alert("✅ Sign Up works! (We'll add real Supabase later)");
-    showLoginForm();
+function showAuthError(msg) {
+    const el = document.getElementById('auth-error');
+    el.textContent = msg;
+    el.classList.remove('hidden');
 }
 
-function signIn() {
-    alert("✅ Sign In successful! Loading editor...");
+async function signUp() {
+    const email = document.getElementById('signup-email').value.trim();
+    const password = document.getElementById('signup-password').value;
+    if (!email || !password) return showAuthError("Email and password required");
+
+    const { error } = await supabase.auth.signUp({ email, password });
+    if (error) showAuthError(error.message);
+    else {
+        alert("✅ Account created!\n\nCheck motionmaxonline@gmail.com for confirmation email.");
+        showLoginForm();
+    }
+}
+
+async function signIn() {
+    const email = document.getElementById('login-email').value.trim();
+    const password = document.getElementById('login-password').value;
+    if (!email || !password) return showAuthError("Email and password required");
+
+    const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+    if (error) return showAuthError(error.message);
+
+    if (data.user.email !== "motionmaxonline@gmail.com") {
+        await supabase.auth.signOut();
+        return showAuthError("Access restricted for now.");
+    }
+
     document.getElementById('auth-modal').classList.add('hidden');
     document.getElementById('main-app').classList.remove('hidden');
+    document.getElementById('user-email').textContent = data.user.email;
 }
 
-window.onload = () => {
-    console.log("✅ Page loaded successfully");
+async function signOut() {
+    await supabase.auth.signOut();
+    location.reload();
+}
+
+// ==================== EDITOR CORE ====================
+let layers = [], selectedId = null, currentTime = 0, duration = 10000;
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+
+function initEditor() {
+    console.log("✅ Full Editor Initialized");
+    // Add your canvas setup, draw function, etc. here later
+}
+
+window.onload = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session && session.user.email === "motionmaxonline@gmail.com") {
+        document.getElementById('auth-modal').classList.add('hidden');
+        document.getElementById('main-app').classList.remove('hidden');
+        document.getElementById('user-email').textContent = session.user.email;
+        initEditor();
+    }
 };
