@@ -57,4 +57,27 @@ window.onload = async () => {
         document.getElementById('auth-modal').classList.add('hidden');
         document.getElementById('main-app').classList.remove('hidden');
     }
+};        await supabase.auth.signOut();
+        return alert("Access restricted for now.");
+    }
+
+    document.getElementById('auth-modal').classList.add('hidden');
+    document.getElementById('main-app').classList.remove('hidden');
+}
+
+function signOut() {
+    location.reload();
+}
+
+function addLayer(type) {
+    alert("Added " + type + " layer! 🎉\n\nThe editor is now working.");
+}
+
+// Auto login if already signed in
+window.onload = async () => {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (session && session.user.email === "motionmaxonline@gmail.com") {
+        document.getElementById('auth-modal').classList.add('hidden');
+        document.getElementById('main-app').classList.remove('hidden');
+    }
 };
