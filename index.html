@@ -6,26 +6,24 @@
     <title>MotionMax</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <link rel="stylesheet" href="styles.css">
 </head>
-<body class="bg-zinc-950 text-zinc-200">
+<body class="bg-zinc-950 text-white">
 
-    <!-- Auth Modal -->
-    <div id="auth-modal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50">
-        <div class="bg-zinc-900 rounded-3xl p-8 w-full max-w-md">
+    <div id="auth-modal" class="fixed inset-0 bg-black/90 flex items-center justify-center">
+        <div class="bg-zinc-900 p-8 rounded-3xl w-full max-w-md">
             <h2 class="text-3xl font-bold text-center mb-6">MotionMax</h2>
             
             <div id="login-form">
                 <input type="email" id="login-email" placeholder="Email" class="w-full p-4 bg-zinc-800 rounded-2xl mb-3">
                 <input type="password" id="login-password" placeholder="Password" class="w-full p-4 bg-zinc-800 rounded-2xl mb-6">
-                <button onclick="signIn()" class="w-full p-4 bg-blue-600 rounded-2xl font-medium">Sign In</button>
+                <button onclick="signIn()" class="w-full p-4 bg-blue-600 rounded-2xl">Sign In</button>
                 <p class="text-center mt-6">No account? <span onclick="showSignUpForm()" class="text-blue-400 cursor-pointer">Create one</span></p>
             </div>
 
             <div id="signup-form" class="hidden">
                 <input type="email" id="signup-email" placeholder="Email" class="w-full p-4 bg-zinc-800 rounded-2xl mb-3">
                 <input type="password" id="signup-password" placeholder="Password" class="w-full p-4 bg-zinc-800 rounded-2xl mb-6">
-                <button onclick="signUp()" class="w-full p-4 bg-blue-600 rounded-2xl font-medium">Create Account</button>
+                <button onclick="signUp()" class="w-full p-4 bg-blue-600 rounded-2xl">Create Account</button>
                 <p class="text-center mt-6">Have an account? <span onclick="showLoginForm()" class="text-blue-400 cursor-pointer">Sign in</span></p>
             </div>
 
@@ -33,29 +31,69 @@
         </div>
     </div>
 
-    <!-- Main Editor -->
-    <div id="main-app" class="hidden flex flex-col h-screen">
-        <nav class="bg-zinc-900 border-b border-zinc-800 px-6 py-4 flex justify-between">
-            <h1 class="text-2xl font-bold">MotionMax</h1>
-            <button onclick="signOut()" class="px-4 py-2 bg-zinc-800 hover:bg-zinc-700 rounded-xl">Sign Out</button>
-        </nav>
-
-        <div class="flex flex-1 overflow-hidden">
-            <!-- Tools -->
-            <div class="w-64 bg-zinc-900 border-r border-zinc-800 p-4">
-                <h3 class="font-semibold mb-4">Tools</h3>
-                <button onclick="addLayer('text')" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl mb-2">T Add Text</button>
-                <button onclick="addLayer('rect')" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl mb-2">□ Rectangle</button>
-                <button onclick="addLayer('circle')" class="w-full py-3 bg-zinc-800 hover:bg-zinc-700 rounded-xl">○ Circle</button>
-            </div>
-
-            <!-- Canvas -->
-            <div class="flex-1 flex items-center justify-center bg-zinc-950">
-                <canvas id="canvas" width="900" height="600" class="border border-zinc-700 bg-white shadow-2xl rounded-xl"></canvas>
-            </div>
+    <div id="main-app" class="hidden h-screen flex items-center justify-center bg-zinc-950">
+        <div class="text-center">
+            <h1 class="text-5xl font-bold mb-4">✅ Welcome to MotionMax!</h1>
+            <p class="text-xl text-zinc-400">You are logged in.</p>
+            <button onclick="signOut()" class="mt-8 px-6 py-3 bg-red-600 rounded-2xl">Sign Out</button>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const supabase = window.supabase.createClient(
+            'https://dyeiilqcufdebboycukh.supabase.co',
+            'sb_publishable_Crh5yHaEd6czFyoPv_-4-Q_FR5J2v4B'
+        );
+
+        function showSignUpForm() {
+            document.getElementById('login-form').classList.add('hidden');
+            document.getElementById('signup-form').classList.remove('hidden');
+        }
+
+        function showLoginForm() {
+            document.getElementById('signup-form').classList.add('hidden');
+            document.getElementById('login-form').classList.remove('hidden');
+        }
+
+        async function signUp() {
+            const email = document.getElementById('signup-email').value.trim();
+            const password = document.getElementById('signup-password').value;
+            if (!email || !password) return alert("Enter email and password");
+
+            const { error } = await supabase.auth.signUp({ email, password });
+            if (error) alert(error.message);
+            else alert("Account created! Check your email.");
+        }
+
+        async function signIn() {
+            const email = document.getElementById('login-email').value.trim();
+            const password = document.getElementById('login-password').value;
+            if (!email || !password) return alert("Enter email and password");
+
+            const { data, error } = await supabase.auth.signInWithPassword({ email, password });
+            if (error) return alert(error.message);
+
+            if (data.user.email !== "motionmaxonline@gmail.com") {
+                await supabase.auth.signOut();
+                return alert("Access restricted for now.");
+            }
+
+            document.getElementById('auth-modal').classList.add('hidden');
+            document.getElementById('main-app').classList.remove('hidden');
+        }
+
+        function signOut() {
+            location.reload();
+        }
+
+        // Auto-login
+        window.onload = async () => {
+            const { data: { session } } = await supabase.auth.getSession();
+            if (session && session.user.email === "motionmaxonline@gmail.com") {
+                document.getElementById('auth-modal').classList.add('hidden');
+                document.getElementById('main-app').classList.remove('hidden');
+            }
+        };
+    </script>
 </body>
 </html>
